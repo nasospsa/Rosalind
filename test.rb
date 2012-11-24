@@ -55,4 +55,18 @@ def counProb
 	return arr.join(' ')
 end
 
+def difference(str1,str2)
+	arr1 = str1.split('')
+	arr2 = str2.split('')
+	result = 0;
+	idx = 0
+	while idx < arr1.length
+		result+=1 if arr1[idx] == arr2[idx]
+		idx +=1
+	end
+	return result
+end
+
+
+
 puts counProb
