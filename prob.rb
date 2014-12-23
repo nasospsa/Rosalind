@@ -16,7 +16,7 @@ end
 
 def prob dna, a
 	a.map { |gc|
-		p = dna.split('').inject(1) { |prod, ch|
+		p = dna.chars.inject(1) { |prod, ch|
 			if ['G', 'C'].include? ch
 				prod *= gc / 2
 			else
