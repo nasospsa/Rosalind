@@ -14,4 +14,24 @@ def counProb
 	return arr.join(' ')
 end
 
-puts counProb
+def prob dna, a
+	a.map { |gc|
+		p = dna.split('').inject(1) { |prod, ch|
+			if ['G', 'C'].include? ch
+				prod *= gc / 2
+			else
+				prod *= (1-gc) / 2
+			end
+		}
+		l = Math.log10(p)
+		l.round(3)
+	}.join(' ')
+end
+
+
+cnts = File.read("probs/rosalind_prob.txt").split("\n")
+dna, a = cnts[0], cnts[1].split(' ').map { |e| e.to_f  }
+# dna, a = 'ACGATACAA', %w(0.129 0.287 0.423 0.476 0.641 0.742 0.783).map { |e| e.to_f  }
+
+puts prob(dna, a)
+# puts counProb

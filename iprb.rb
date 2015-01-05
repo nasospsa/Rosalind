@@ -1,25 +1,23 @@
 #!/usr/bin/env ruby
 
-def iprb(k, m, n)
-	all = (k+m+n).to_f
-	a = []
-	kp = [1, 1, 1, 1, 0.75, 0.5, 1, 0.5, 0]
+def iprb(*kmn)
+	all 	= kmn.inject(:+).to_f
+	t 		= 0
+	kp 		= [1, 1, 1, 1, 0.75, 0.5, 1, 0.5, 0]
 
-	[k,m,n].each_with_index do |num1, i1|
-		[k,m,n].each_with_index do |num2, i2|
+	kmn.each_with_index do |num1, i1|
+		kmn.each_with_index do |num2, i2|
 			prob = kp[i1*3 + i2]
-			if i1 == i2
-				p = (num1/all) * ((num2-1)/(all-1)) * prob
-			else
-				p = (num1/all) * (num2/(all-1)) * prob
-			end
-			a.push p
+			left = (i1 == i2) ? num2-1 : num2
+			p = (num1/all) * (left/(all-1)) * prob
+			t += p
 		end
 	end
 
-	a.inject(:+).round(5)
+	t.round(5)
 end
 
 k,m,n = File.read("probs/rosalind_iprb.txt").split(' ').map { |e| e.to_i }
+# k,m,n = 2, 2, 2
 
 puts iprb(k,m,n)
