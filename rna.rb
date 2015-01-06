@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
 
-contents = File.read("probs/rosalind_rna.txt")
-
 def rna(nucstring)
-	u = nucstring.gsub(/T/) { 'U' }
-	return u
+	nucstring.tr("T", "U")
 end
+
+s = File.read("probs/rosalind_rna.txt")
+# s = "GATGGAACTTGACTACGTAAATT"
+
+puts rna s

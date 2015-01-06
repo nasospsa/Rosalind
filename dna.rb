@@ -1,12 +1,10 @@
 #!/usr/bin/env ruby
 
-contents = File.read("probs/rosalind_revc.txt")
-def countNuc(nucstring)
-	ca = nucstring.count('A')
-	ct = nucstring.count('T')
-	cc = nucstring.count('C')
-	cg = nucstring.count('G')
-	return "#{ca} #{cc} #{cg} #{ct}"
+def dna(nucstring)
+	['A','C','G','T'].map { |ch| nucstring.count(ch) }.join ' '
 end
 
-puts countNuc(contents)
+s = File.read("probs/rosalind_dna.txt")
+# s = "AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC"
+
+puts countNuc(s)
