@@ -1,16 +1,11 @@
-def difference()
-	textfile = File.read("probs/rosalind_hamm.txt")
-	texts = textfile.split(' ')
-	arr1 = texts[0].split('')
-	arr2 = texts[1].split('')
-	puts texts
-	result = 0;
-	idx = 0
-	while idx < arr1.length
-		result+=1 if arr1[idx] != arr2[idx]
-		idx +=1
-	end
-	return result
+#!/usr/bin/env ruby
+
+def hamm(s1, s2)
+	(0..s1.length-1).inject(0) {|s, i|
+		s += (s1[i] == s2[i]) ? 0 : 1
+	}
 end
 
-puts difference
+s1,s2 = File.readlines("probs/rosalind_hamm.txt")
+# s1,s2 = "GAGCCTACTAACGGGAT", "CATCGTAATGACGGCCT"
+puts hamm s1,s2
