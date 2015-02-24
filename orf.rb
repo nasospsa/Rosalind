@@ -19,31 +19,24 @@ $cdnTbl = {
 	'UGG' => 'W',	'CGG' => 'R',	'AGG' => 'R',	'GGG' => 'G'
 }
 
-def rc(dna)
-	dna.gsub(/[CGAT]/, 'C' => 'G', 'G' => 'C', 'A'=>'T', 'T'=>'A')
-end
-
 def orf(dna)
 	startCodon = "AUG"
 	stopCodons = $cdnTbl.select { |k, v| v == ' ' }.keys
-	regexp = /((?:#{startCodon})(?:(?:...)*?))(?:#{stopCodons.join('|')})/
+	regexp = /(?=((?:#{startCodon})(?:(?:...)*?)(?:#{stopCodons.join('|')})))/
 	t = []
+	revc = dna.reverse.gsub(/[CGAT]/, 'C' => 'G', 'G' => 'C', 'A'=>'T', 'T'=>'A')
 
-	[dna, rc(dna.reverse)].each { |d|
+	[dna, revc].each { |d|
 		rna = d.tr("T", "U")
 		f = rna.scan(regexp).flatten
-		puts f.inspect
-		e = f.map { |r|
-			r.scan(/.../).map {|c3| $cdnTbl[c3]}.join
+		f.each { |r|
+			t.push r.scan(/.../).map {|c3| $cdnTbl[c3]}.join
 		}
-		puts e
-		t.concat(e)
-		puts "-------------------"
 	}
-	t
+	t.uniq
 end
 
-
-s = "AGCCATGTAGCTAACTCAGGTTACATGGGGATGACCCCGCGACTTGGATTAGAGTCTCTTTTGGAATAAGCCTGAATGATCCGAGTAGCATCTCAG"
+s = File.read("probs/rosalind_orf.txt").tr("\n",'').split(/>Rosalind_\d{4}/).join
+# s = "AGCCATGTAGCTAACTCAGGTTACATGGGGATGACCCCGCGACTTGGATTAGAGTCTCTTTTGGAATAAGCCTGAATGATCCGAGTAGCATCTCAG"
 
 puts orf s
